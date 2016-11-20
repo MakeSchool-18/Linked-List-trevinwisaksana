@@ -74,6 +74,7 @@ class LinkedListTest(unittest.TestCase):
         ll.append('A')
         ll.append('B')
         ll.append('C')
+        
         ll.delete('A')
         assert ll.head.data == 'B'
         assert ll.tail.data == 'C'
