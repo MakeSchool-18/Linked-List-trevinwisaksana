@@ -84,50 +84,37 @@ class LinkedList(object):
         # TODO: find given item and delete if found
         node = Node(item)
         index = self.as_list().index(item)
-         # If linked list is empty
-        if self.head is None:
-            return
-        if self.tail is None:
-            return
-
         # Store head node
         temp = self.head
+        previous = None
 
         # If head needs to be removed
         if index == 0:
             self.head = temp.next
-            if self.tail is None:
-                self.tail = None
-            else:
-                self.tail = 
             self.size -= 1
             temp = None
+            if self.is_empty():
+                self.tail = None
             return
 
-        # If position is more than number of nodes
-        if temp is None:
-            return
-        if temp.next is None:
-            return
-
-        # Node temp.next is the node to be deleted
-        # store pointer to the next of node to be deleted
-        next = temp.next.next
+        # When node.next is None, it's the tail
+        if node.next is None:
+            previous = Node(self.as_list()[index - 1])
+            self.tail = previous
 
         # Unlink the node from linked list
         temp.next = None
-
-        temp.next = next
         self.size -= 1
-
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality"""
         # TODO: find item where quality(item) is True
-        print(type(quality))
-        if quality in self.as_list():
-            print("testing")
-        return False
+        for item in self.as_list():
+            if quality(item) is True:
+                return item
+            if quality(item) is None:
+                raise ValueError("Item not found")
+
 
 
 def test_linked_list():
@@ -150,18 +137,20 @@ def test_linked_list():
     print('List: ', ll)
     print('tail ', ll.tail)
     print("===================")
-
+    '''
     print(">>>>>>>>>>>>>>>>>>>>")
-    ll.find(lambda item: item == 'B') == 'B'
+    print(ll)
+    ll.find(lambda item: item == 'D')
     print('List: ', ll)
     print(">>>>>>>>>>>>>>>>>>>>")
-    '''
+
+    print(ll)
     ll.delete('A')
     print('tail: ' + str(ll.tail))
     print(ll)
     ll.delete('C')
-    print('tail: ' + str(ll.tail))
     print(ll)
+    print('tail: ' + str(ll.tail))
     ll.delete('B')
     print(ll)
     print('head: ' + str(ll.head))
