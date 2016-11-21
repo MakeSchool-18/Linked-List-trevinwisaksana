@@ -1,7 +1,3 @@
-#!python
-
-from __future__ import print_function
-
 
 class Node(object):
 
@@ -9,11 +5,11 @@ class Node(object):
         """Initialize this node with the given data"""
         self.data = data
         self.next = None
+        self.previous = None
 
     def __repr__(self):
         """Return a string representation of this node"""
         return 'Node({})'.format(repr(self.data))
-
 
 class LinkedList(object):
 
@@ -21,6 +17,7 @@ class LinkedList(object):
         """Initialize this linked list; append the given items, if any"""
         self.head = None
         self.tail = None
+        self.previous = None
         self.size = 0
         if iterable:
             for item in iterable:
@@ -136,58 +133,3 @@ class LinkedList(object):
                 return item
             if quality(item) is None:
                 raise ValueError("Item not found")
-
-
-def test_linked_list():
-    ll = LinkedList()
-    print(ll)
-    ll.append('A')
-    print(ll)
-    ll.append('B')
-    print(ll)
-    ll.append('C')
-    print(ll)
-    print('head: ' + str(ll.head))
-    print('tail: ' + str(ll.tail))
-    print(ll.length())
-    '''
-    print("===================")
-    ll.prepend('C')
-    ll.prepend('B')
-    ll.prepend('A')
-    print('List: ', ll)
-    print('tail ', ll.tail)
-    print("===================")
-    '''
-    print(">>>>>>>>>>>>>>>>>>>>")
-    print(ll)
-    ll.find(lambda item: item == 'D')
-    print('List: ', ll)
-    print(">>>>>>>>>>>>>>>>>>>>")
-
-    print("-------------------")
-    print(ll)
-    ll.delete('B')
-    print('tail: ' + str(ll.tail))
-    print(ll)
-    ll.delete('C')
-    print("What's left: ", ll)
-    print('tail: ' + str(ll.tail))
-    ll.delete('A')
-    print(ll)
-    print('head: ' + str(ll.head))
-    print('tail: ' + str(ll.tail))
-    print(ll.length())
-    print("-------------------")
-
-    print(ll)
-    ll.append('A')
-    print(ll)
-    ll.append('B')
-    print(ll)
-    ll.append('C')
-    for data in ll:
-        print(data)
-
-if __name__ == '__main__':
-    test_linked_list()
