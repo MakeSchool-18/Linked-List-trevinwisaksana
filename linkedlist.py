@@ -30,6 +30,18 @@ class LinkedList(object):
         """Return a string representation of this linked list"""
         return 'LinkedList({})'.format(self.as_list())
 
+    def __iter__(self):
+        """Allows the class to be iterable"""
+        self.count = -1
+        return self
+
+    def next(self):
+        '''Allows the iterable class to go iterate through elements'''
+        self.count += 1
+        if self.count == self.size:
+            raise StopIteration
+        return self.as_list()[self.count]
+
     def as_list(self):
         """Return a list of all items in this linked list"""
         result = []
@@ -116,7 +128,6 @@ class LinkedList(object):
                 raise ValueError("Item not found")
 
 
-
 def test_linked_list():
     ll = LinkedList()
     print(ll)
@@ -129,7 +140,7 @@ def test_linked_list():
     print('head: ' + str(ll.head))
     print('tail: ' + str(ll.tail))
     print(ll.length())
-    '''
+
     print("===================")
     ll.prepend('C')
     ll.prepend('B')
@@ -137,7 +148,7 @@ def test_linked_list():
     print('List: ', ll)
     print('tail ', ll.tail)
     print("===================")
-    '''
+
     print(">>>>>>>>>>>>>>>>>>>>")
     print(ll)
     ll.find(lambda item: item == 'D')
@@ -157,6 +168,14 @@ def test_linked_list():
     print('tail: ' + str(ll.tail))
     print(ll.length())
 
+    print(ll)
+    ll.append('A')
+    print(ll)
+    ll.append('B')
+    print(ll)
+    ll.append('C')
+    for data in ll:
+        print(data)
 
 if __name__ == '__main__':
     test_linked_list()
