@@ -10,6 +10,9 @@ class Node(object):
         self.data = data
         self.next = None
 
+    def getData(self):
+        return self.data
+
     def __repr__(self):
         """Return a string representation of this node"""
         return 'Node({})'.format(repr(self.data))
@@ -95,34 +98,30 @@ class LinkedList(object):
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError"""
         # TODO: find given item and delete if found
-        node = Node(item)
-        index = self.as_list().index(item)
-        # Store head node
-        temp = self.head
+        current = self.head
         previous = None
 
-        # If head needs to be removed
-        if index == 0:
-            self.head = temp.next
-            self.size -= 1
-            temp = None
-            if self.is_empty():
-                self.tail = None
-            return
+        while current is not None:
+            if current.getData() == item:
+                if self.head == current:
+                    self.head = current.next
+                if self.tail == current:
+                    self.tail = previous
+                if previous:
+                    previous.next = current.next
+                return
+            previous = current
+            current = current.next
 
-        # When node.next is None, it's the tail
-        if node.next is None:
-            previous = Node(self.as_list()[index - 1])
-            self.tail = previous
+        raise ValueError('Item not found: {}'.format(item))
 
-        # If the element is in the middle
-        ''' if index > 0:
+        if index > 0:
             previous = Node(self.as_list()[index - 1])
             print("Pre: ", previous)
             node.next = Node(self.as_list()[index + 1])
             print("Next: ", node.next)
             previous.next = node.next
-        '''
+
 
         # Unlink the node from linked list
         temp.next = None
@@ -167,19 +166,19 @@ def test_linked_list():
 
     print("-------------------")
     print(ll)
-    ll.delete('B')
+    ll.delete('A')
     print('tail: ' + str(ll.tail))
     print(ll)
     ll.delete('C')
     print("What's left: ", ll)
     print('tail: ' + str(ll.tail))
-    ll.delete('A')
+    ll.delete('B')
     print(ll)
     print('head: ' + str(ll.head))
     print('tail: ' + str(ll.tail))
     print(ll.length())
     print("-------------------")
-
+    '''
     print(ll)
     ll.append('A')
     print(ll)
@@ -188,6 +187,6 @@ def test_linked_list():
     ll.append('C')
     for data in ll:
         print(data)
-
+    '''
 if __name__ == '__main__':
     test_linked_list()
