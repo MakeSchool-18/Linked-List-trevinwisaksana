@@ -1,15 +1,41 @@
 
 class Node(object):
 
-    def __init__(self, data):
+    def __init__(self, data, previous):
         """Initialize this node with the given data"""
         self.data = data
+        self.previous = previous
         self.next = None
-        self.previous = None
+
+    def set_data(self, d):
+        """Used to set the data of the node, takes one argument"""
+        self.data = d
+
+    def set_next(self, n):
+        """Used to set the node next to the current one, takes one argument"""
+        self.next = n
+
+    def set_previous(self, p):
+        """Used to set the node before the current one, takes one argument"""
+        self.previous = p
+
+    def get_data(self):
+        """Called to retrieve the data on the node"""
+        return self.data
+
+    def get_next(self):
+        """Called to retrieve the node next to the current one"""
+        return self.next
+
+    def get_previous(self):
+        """Called to get the node before the current one"""
+        return self.previous
 
     def __repr__(self):
         """Return a string representation of this node"""
         return 'Node({})'.format(repr(self.data))
+
+
 
 class LinkedList(object):
 
@@ -17,7 +43,6 @@ class LinkedList(object):
         """Initialize this linked list; append the given items, if any"""
         self.head = None
         self.tail = None
-        self.previous = None
         self.size = 0
         if iterable:
             for item in iterable:
@@ -62,16 +87,10 @@ class LinkedList(object):
     def append(self, item):
         """Insert the given item at the tail of this linked list"""
         # Creates a new Node
-        node = Node(item)
+        new_node = Node(item)
         # Checks if the LinkedList is empty
         if self.is_empty():
-            # Adds the new node to the head
-            self.head = node
-        # If a tail already exists, add a new tail
-        if self.tail is not None:
-            self.tail.next = node
-        # If a tail doesn't exist, add tail
-        self.tail = node
+            self.head.set_previous(new_node)
         # Increments the size of the LinkedList
         self.size += 1
 
@@ -133,3 +152,58 @@ class LinkedList(object):
                 return item
             if quality(item) is None:
                 raise ValueError("Item not found")
+
+
+def test_linked_list():
+    ll = LinkedList()
+    print(ll)
+    ll.append('A')
+    print(ll)
+    ll.append('B')
+    print(ll)
+    ll.append('C')
+    print(ll)
+    print('head: ' + str(ll.head))
+    print('tail: ' + str(ll.tail))
+    print(ll.length())
+    '''
+    print("===================")
+    ll.prepend('C')
+    ll.prepend('B')
+    ll.prepend('A')
+    print('List: ', ll)
+    print('tail ', ll.tail)
+    print("===================")
+    '''
+    print(">>>>>>>>>>>>>>>>>>>>")
+    print(ll)
+    ll.find(lambda item: item == 'D')
+    print('List: ', ll)
+    print(">>>>>>>>>>>>>>>>>>>>")
+
+    print("-------------------")
+    print(ll)
+    ll.delete('A')
+    print('tail: ' + str(ll.tail))
+    print(ll)
+    ll.delete('C')
+    print("What's left: ", ll)
+    print('tail: ' + str(ll.tail))
+    ll.delete('B')
+    print(ll)
+    print('head: ' + str(ll.head))
+    print('tail: ' + str(ll.tail))
+    print(ll.length())
+    print("-------------------")
+    '''
+    print(ll)
+    ll.append('A')
+    print(ll)
+    ll.append('B')
+    print(ll)
+    ll.append('C')
+    for data in ll:
+        print(data)
+    '''
+if __name__ == '__main__':
+    test_linked_list()
