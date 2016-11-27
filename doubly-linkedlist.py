@@ -87,7 +87,7 @@ class LinkedList(object):
     def append(self, item):
         """Insert the given item at the tail of this linked list"""
         # Creates a new Node
-        new_node = Node(item)
+        new_node = Node (item, self.head)
         # Checks if the LinkedList is empty
         if self.is_empty():
             self.head.set_previous(new_node)
@@ -111,38 +111,22 @@ class LinkedList(object):
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError"""
         # TODO: find given item and delete if found
-        node = Node(item)
-        index = self.as_list().index(item)
-        # Store head node
-        temp = self.head
+        current = self.head
         previous = None
 
-        # If head needs to be removed
-        if index == 0:
-            self.head = temp.next
-            self.size -= 1
-            temp = None
-            if self.is_empty():
-                self.tail = None
-            return
+        while current is not None:
+            if current.getData() is item:
+                if self.head is current:
+                    self.head = current.next
+                if self.tail is current:
+                    self.tail = previous
+                if previous:
+                    previous.next = current.next
+                return
+            previous = current
+            current = current.next
 
-        # When node.next is None, it's the tail
-        if node.next is None:
-            previous = Node(self.as_list()[index - 1])
-            self.tail = previous
-
-        # If the element is in the middle
-        ''' if index > 0:
-            previous = Node(self.as_list()[index - 1])
-            print("Pre: ", previous)
-            node.next = Node(self.as_list()[index + 1])
-            print("Next: ", node.next)
-            previous.next = node.next
-        '''
-
-        # Unlink the node from linked list
-        temp.next = None
-        self.size -= 1
+        raise ValueError('Item not found: {}'.format(item))
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality"""

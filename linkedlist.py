@@ -102,10 +102,10 @@ class LinkedList(object):
         previous = None
 
         while current is not None:
-            if current.getData() == item:
-                if self.head == current:
+            if current.getData() is item:
+                if self.head is current:
                     self.head = current.next
-                if self.tail == current:
+                if self.tail is current:
                     self.tail = previous
                 if previous:
                     previous.next = current.next
