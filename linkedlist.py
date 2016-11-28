@@ -10,9 +10,6 @@ class Node(object):
         self.data = data
         self.next = None
 
-    def getData(self):
-        return self.data
-
     def __repr__(self):
         """Return a string representation of this node"""
         return 'Node({})'.format(repr(self.data))
@@ -101,30 +98,20 @@ class LinkedList(object):
         current = self.head
         previous = None
 
-        while current is not None:
-            if current.getData() is item:
-                if self.head is current:
-                    self.head = current.next
-                if self.tail is current:
-                    self.tail = previous
-                if previous:
-                    previous.next = current.next
+        while current is not None: # While the list is not empty
+            if current.data is item: # If the data matches an item in a head
+                if self.head is current: # If the head data has the current item
+                    self.head = current.next # Set the head pointer to None
+                if self.tail is current: # If the item matches the tail data
+                    self.tail = previous # Set the previous node to become the new tail
+                if previous: # If previous is None (if it's the head)
+                    previous.next = current.next # Set the head point to None
                 return
-            previous = current
-            current = current.next
+            previous = current # Keep iterating
+            current = current.next # Keep iterating
 
-        raise ValueError('Item not found: {}'.format(item))
+        return "Item not found" # Return item not found 
 
-        if index > 0:
-            previous = Node(self.as_list()[index - 1])
-            print("Pre: ", previous)
-            node.next = Node(self.as_list()[index + 1])
-            print("Next: ", node.next)
-            previous.next = node.next
-
-
-        # Unlink the node from linked list
-        temp.next = None
         self.size -= 1
 
     def find(self, quality):
